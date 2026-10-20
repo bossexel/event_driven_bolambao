@@ -1,4 +1,4 @@
-package com.example.clydhnseventdriven;
+package com.example.eventdrivenbolambao;
 
 import org.junit.Test;
 

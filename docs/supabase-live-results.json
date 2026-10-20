@@ -1,0 +1,130 @@
+{
+  "project": "event_driven_bolambao",
+  "endpoint": "https://dijglmwapgewnqztbnis.supabase.co/rest/v1/customer",
+  "runner": "Newman (Postman collection runner)",
+  "execution": "live",
+  "startedAt": "2026-10-20T23:09:51.227Z",
+  "startedAtManila": "October 21, 2026 at 07:09:51 (Asia/Manila)",
+  "requests": 4,
+  "assertions": 8,
+  "failures": 0,
+  "insertedCustomer": {
+    "customerid": 1168554867,
+    "lastname": "Bolambao",
+    "firstname": "Juan",
+    "mobileno": "09123456789",
+    "address": "Cebu City, Philippines"
+  },
+  "tests": [
+    {
+      "name": "01 - Insert customer",
+      "method": "POST",
+      "requestBody": {
+        "customerid": 1168554867,
+        "lastname": "Bolambao",
+        "firstname": "Juan",
+        "mobileno": "09123456789",
+        "address": "Cebu City, Philippines"
+      },
+      "status": 201,
+      "response": null,
+      "responseTimeMs": 1102,
+      "assertions": [
+        {
+          "name": "HTTP 201 Created",
+          "passed": true
+        },
+        {
+          "name": "return=minimal has an empty body",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "02 - Reject duplicate customerid",
+      "method": "POST",
+      "requestBody": {
+        "customerid": 1168554867,
+        "lastname": "Bolambao",
+        "firstname": "Juan",
+        "mobileno": "09123456789",
+        "address": "Cebu City, Philippines"
+      },
+      "status": 409,
+      "response": {
+        "code": "23505",
+        "details": null,
+        "hint": null,
+        "message": "duplicate key value violates unique constraint \"customer_pkey\""
+      },
+      "responseTimeMs": 382,
+      "assertions": [
+        {
+          "name": "HTTP 409",
+          "passed": true
+        },
+        {
+          "name": "PostgreSQL error 23505",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "03 - Reject missing firstname",
+      "method": "POST",
+      "requestBody": {
+        "customerid": 1168554868,
+        "lastname": "Bolambao",
+        "mobileno": "09123456789",
+        "address": "Cebu City, Philippines"
+      },
+      "status": 400,
+      "response": {
+        "code": "23502",
+        "details": null,
+        "hint": null,
+        "message": "null value in column \"firstname\" of relation \"customer\" violates not-null constraint"
+      },
+      "responseTimeMs": 136,
+      "assertions": [
+        {
+          "name": "HTTP 400",
+          "passed": true
+        },
+        {
+          "name": "PostgreSQL error 23502",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "04 - Reject blank mobileno",
+      "method": "POST",
+      "requestBody": {
+        "customerid": 1168554869,
+        "lastname": "Bolambao",
+        "firstname": "Juan",
+        "mobileno": "   ",
+        "address": "Cebu City, Philippines"
+      },
+      "status": 400,
+      "response": {
+        "code": "23514",
+        "details": null,
+        "hint": null,
+        "message": "new row for relation \"customer\" violates check constraint \"customer_mobileno_required\""
+      },
+      "responseTimeMs": 156,
+      "assertions": [
+        {
+          "name": "HTTP 400",
+          "passed": true
+        },
+        {
+          "name": "PostgreSQL error 23514",
+          "passed": true
+        }
+      ]
+    }
+  ]
+}

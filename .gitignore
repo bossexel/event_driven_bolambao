@@ -13,3 +13,10 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Local Postman environment exports
+/postman/*.local.postman_environment.json
+/postman/*.local.json
+
+# Local Supabase credentials
+/.env.local

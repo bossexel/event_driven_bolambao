@@ -1,4 +1,4 @@
-package com.example.clydhnseventdriven;
+package com.example.eventdrivenbolambao;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -13,8 +13,10 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeTrue;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.TextView;
@@ -43,12 +45,8 @@ public class LoginAutomationTest {
     private static final long OTP_DELAY = 650;
     private static final long TIMEOUT = 90000;
 
-    // Original Render classroom account
-    private static final String VALID_EMAIL =
-            "clydehans6@gmail.com";
-
-    private static final String VALID_PASSWORD =
-            "123456";
+    private String validEmail;
+    private String validPassword;
 
     // Intentionally incorrect password
     private static final String WRONG_PASSWORD =
@@ -57,6 +55,12 @@ public class LoginAutomationTest {
     @Before
     public void setUp() {
 
+        Bundle arguments = InstrumentationRegistry.getArguments();
+        validEmail = arguments.getString("testEmail", "");
+        validPassword = arguments.getString("testPassword", "");
+        assumeTrue("Supply testEmail and testPassword instrumentation arguments",
+                !validEmail.trim().isEmpty() && !validPassword.isEmpty());
+
         Intent intent = new Intent(
                 InstrumentationRegistry
                         .getInstrumentation()
@@ -64,7 +68,7 @@ public class LoginAutomationTest {
                 MainActivity.class
         );
 
-        // Uses original Render API in MainActivity.
+        // Uses the configured API in MainActivity.
         scenario = ActivityScenario.launch(intent);
 
         pause(DELAY);
@@ -78,13 +82,13 @@ public class LoginAutomationTest {
         // =====================================
 
         onView(withId(R.id.emailInput))
-                .perform(replaceText(VALID_EMAIL));
+                .perform(replaceText(validEmail));
 
         pause(DELAY);
 
         onView(withId(R.id.passwordInput))
                 .perform(
-                        replaceText(VALID_PASSWORD),
+                        replaceText(validPassword),
                         closeSoftKeyboard()
                 );
 
@@ -193,7 +197,7 @@ public class LoginAutomationTest {
         // =====================================
 
         onView(withId(R.id.emailInput))
-                .perform(replaceText(VALID_EMAIL));
+                .perform(replaceText(validEmail));
 
         pause(DELAY);
 
@@ -329,7 +333,7 @@ public class LoginAutomationTest {
         }
 
         throw new AssertionError(
-                "Users did not load from original Render API"
+                "Users did not load from the configured API"
         );
     }
 

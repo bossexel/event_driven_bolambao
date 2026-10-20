@@ -1,5 +1,5 @@
 
-package com.example.clydhnseventdriven;
+package com.example.eventdrivenbolambao;
 
 import android.content.Intent;
 import android.os.Bundle;

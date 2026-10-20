@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ClydhnsEventDriven" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.EventDrivenBolambao" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.ClydhnsEventDriven" parent="Base.Theme.ClydhnsEventDriven" />
+    <style name="Theme.EventDrivenBolambao" parent="Base.Theme.EventDrivenBolambao" />
 </resources>

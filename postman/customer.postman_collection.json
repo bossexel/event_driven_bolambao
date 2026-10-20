@@ -1,0 +1,330 @@
+{
+  "info": {
+    "_postman_id": "5f5967bd-d872-4b80-987c-c923a26cb726",
+    "name": "event_driven_bolambao - Supabase Customer Insert Lab",
+    "description": "Create the customer table with supabase/schema.sql, configure the environment, then run all four requests in numbered order. Each run inserts one fictional customer and checks three rejected inserts. Anonymous API access is INSERT only. Use the Supabase dashboard to verify persistence. Hosted execution is required after creating your project.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "noauth"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "const projectUrl = String(pm.environment.get(\"supabase_url\") || \"\").trim().replace(/\\/+$/, \"\");",
+          "const apiKey = String(pm.environment.get(\"supabase_key\") || \"\").trim();",
+          "if (!/^https:\\/\\/[a-z0-9-]+\\.supabase\\.co$/i.test(projectUrl)) {",
+          "  throw new Error(\"Select the lab environment and enter your Supabase project URL.\");",
+          "}",
+          "if (!apiKey.startsWith(\"sb_publishable_\") && !apiKey.startsWith(\"eyJ\")) {",
+          "  throw new Error(\"Enter your publishable or legacy anon key in supabase_key; do not use a secret key.\");",
+          "}",
+          "pm.environment.set(\"supabase_url\", projectUrl);",
+          "pm.environment.set(\"supabase_key\", apiKey);",
+          "pm.request.headers.remove(\"Authorization\");",
+          "if (apiKey.startsWith(\"eyJ\")) {",
+          "  pm.request.headers.upsert({ key: \"Authorization\", value: \"Bearer \" + apiKey });",
+          "}"
+        ]
+      }
+    }
+  ],
+  "variable": [],
+  "item": [
+    {
+      "name": "01 - Insert customer",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set(\"customer_insert_succeeded\", \"false\");",
+              "const customer = {",
+              "  customerid: Math.floor(Math.random() * 2000000000) + 1,",
+              "  lastname: \"Bolambao\",",
+              "  firstname: \"Juan\",",
+              "  mobileno: \"09123456789\",",
+              "  address: \"Cebu City, Philippines\"",
+              "};",
+              "pm.collectionVariables.set(\"inserted_customer\", JSON.stringify(customer));",
+              "pm.variables.set(\"request_body\", JSON.stringify(customer, null, 2));",
+              "console.log(\"Customer ID for Supabase verification:\", customer.customerid);",
+              "console.log(\"Customer request body:\", JSON.stringify(customer, null, 2));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201 Created\", function () { pm.response.to.have.status(201); });",
+              "pm.test(\"return=minimal has an empty body\", function () { pm.expect(pm.response.text()).to.eql(\"\"); });",
+              "pm.collectionVariables.set(\"customer_insert_succeeded\", pm.response.code === 201 ? \"true\" : \"false\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{supabase_key}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Prefer",
+            "value": "return=minimal",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{request_body}}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{supabase_url}}/rest/v1/customer",
+          "host": [
+            "{{supabase_url}}"
+          ],
+          "path": [
+            "rest",
+            "v1",
+            "customer"
+          ]
+        },
+        "description": "Generates an unused candidate ID and sends all five fields. Expect 201 with an empty body. Verify the ID and record in Supabase Table Editor or SQL Editor."
+      },
+      "response": []
+    },
+    {
+      "name": "02 - Reject duplicate customerid",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.collectionVariables.get(\"customer_insert_succeeded\") !== \"true\") {",
+              "  throw new Error(\"Run 01 - Insert customer successfully before the error checks.\");",
+              "}",
+              "const customer = JSON.parse(pm.collectionVariables.get(\"inserted_customer\"));",
+              "pm.variables.set(\"request_body\", JSON.stringify(customer, null, 2));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 409\", function () { pm.response.to.have.status(409); });",
+              "pm.test(\"PostgreSQL error 23505\", function () { pm.expect(pm.response.json().code).to.eql(\"23505\"); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{supabase_key}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Prefer",
+            "value": "return=minimal",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{request_body}}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{supabase_url}}/rest/v1/customer",
+          "host": [
+            "{{supabase_url}}"
+          ],
+          "path": [
+            "rest",
+            "v1",
+            "customer"
+          ]
+        },
+        "description": "Resends the successfully inserted customer. Expect 409 and code 23505."
+      },
+      "response": []
+    },
+    {
+      "name": "03 - Reject missing firstname",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.collectionVariables.get(\"customer_insert_succeeded\") !== \"true\") {",
+              "  throw new Error(\"Run 01 - Insert customer successfully before the error checks.\");",
+              "}",
+              "const customer = JSON.parse(pm.collectionVariables.get(\"inserted_customer\"));",
+              "customer.customerid += 1;",
+              "delete customer.firstname;",
+              "pm.variables.set(\"request_body\", JSON.stringify(customer, null, 2));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", function () { pm.response.to.have.status(400); });",
+              "pm.test(\"PostgreSQL error 23502\", function () { pm.expect(pm.response.json().code).to.eql(\"23502\"); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{supabase_key}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Prefer",
+            "value": "return=minimal",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{request_body}}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{supabase_url}}/rest/v1/customer",
+          "host": [
+            "{{supabase_url}}"
+          ],
+          "path": [
+            "rest",
+            "v1",
+            "customer"
+          ]
+        },
+        "description": "Omits the required firstname. Expect 400 and code 23502."
+      },
+      "response": []
+    },
+    {
+      "name": "04 - Reject blank mobileno",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.collectionVariables.get(\"customer_insert_succeeded\") !== \"true\") {",
+              "  throw new Error(\"Run 01 - Insert customer successfully before the error checks.\");",
+              "}",
+              "const customer = JSON.parse(pm.collectionVariables.get(\"inserted_customer\"));",
+              "customer.customerid += 2;",
+              "customer.mobileno = \"   \";",
+              "pm.variables.set(\"request_body\", JSON.stringify(customer, null, 2));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", function () { pm.response.to.have.status(400); });",
+              "pm.test(\"PostgreSQL error 23514\", function () { pm.expect(pm.response.json().code).to.eql(\"23514\"); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{supabase_key}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Prefer",
+            "value": "return=minimal",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{request_body}}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{supabase_url}}/rest/v1/customer",
+          "host": [
+            "{{supabase_url}}"
+          ],
+          "path": [
+            "rest",
+            "v1",
+            "customer"
+          ]
+        },
+        "description": "Sends a whitespace-only mobile number. Expect 400 and code 23514."
+      },
+      "response": []
+    }
+  ]
+}

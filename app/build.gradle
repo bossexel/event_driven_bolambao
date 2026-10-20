@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.clydhnseventdriven'
+    namespace 'com.example.eventdrivenbolambao'
     compileSdk 35
 
     defaultConfig {
-        applicationId "com.example.clydhnseventdriven"
+        applicationId "com.example.eventdrivenbolambao"
 
         minSdk 24
         targetSdk 35

@@ -1,4 +1,4 @@
-package com.example.clydhnseventdriven;
+package com.example.eventdrivenbolambao;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,8 +30,7 @@ public class SignupActivity extends AppCompatActivity {
     Button signupButton;
     TextView loginText;
 
-    private static final String API_URL =
-            "https://user-api-dtfg.onrender.com/users";
+    private static final String API_URL = "https://users-api-exiel.onrender.com";
 
     private RequestQueue requestQueue;
     private boolean registering = false;
@@ -44,8 +43,7 @@ public class SignupActivity extends AppCompatActivity {
         nameInput = findViewById(R.id.nameInput);
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
-        confirmPasswordInput =
-                findViewById(R.id.confirmPasswordInput);
+        confirmPasswordInput = findViewById(R.id.confirmPasswordInput);
 
         signupButton = findViewById(R.id.signupButton);
         loginText = findViewById(R.id.loginText);
@@ -63,7 +61,8 @@ public class SignupActivity extends AppCompatActivity {
 
     private void registerUser() {
 
-        if (registering) return;
+        if (registering)
+            return;
 
         String name = nameInput.getText()
                 .toString().trim();
@@ -144,10 +143,10 @@ public class SignupActivity extends AppCompatActivity {
                     boolean exists = false;
 
                     for (int i = 0; i < response.length(); i++) {
-                        JSONObject user =
-                                response.optJSONObject(i);
+                        JSONObject user = response.optJSONObject(i);
 
-                        if (user == null) continue;
+                        if (user == null)
+                            continue;
 
                         if (email.equalsIgnoreCase(
                                 user.optString("Email", ""))) {
@@ -174,12 +173,10 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(this,
                             "Unable to check registered accounts",
                             Toast.LENGTH_LONG).show();
-                }
-        );
+                });
 
         checkRequest.setRetryPolicy(
-                new DefaultRetryPolicy(60000, 0, 1.0f)
-        );
+                new DefaultRetryPolicy(60000, 0, 1.0f));
 
         requestQueue.add(checkRequest);
     }
@@ -222,13 +219,11 @@ public class SignupActivity extends AppCompatActivity {
 
                     Toast.makeText(this,
                             message, Toast.LENGTH_LONG).show();
-                }
-        );
+                });
 
         // No automatic retry for account creation.
         request.setRetryPolicy(
-                new DefaultRetryPolicy(60000, 0, 1.0f)
-        );
+                new DefaultRetryPolicy(60000, 0, 1.0f));
 
         requestQueue.add(request);
     }
@@ -238,8 +233,7 @@ public class SignupActivity extends AppCompatActivity {
         signupButton.setEnabled(!loading);
         loginText.setEnabled(!loading);
         signupButton.setText(
-                loading ? "Creating Account..." : "Sign Up"
-        );
+                loading ? "Creating Account..." : "Sign Up");
     }
 
     private void goToLogin() {
