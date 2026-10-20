@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="#FAF8FC"
+    android:padding="30dp">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="70dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Account"
+        android:textColor="#171717"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="45dp" />
+
+    <!-- Full Name -->
+    <EditText
+        android:id="@+id/nameInput"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_input"
+        android:hint="Full name"
+        android:textSize="17sp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:inputType="textPersonName"
+        android:layout_marginBottom="15dp" />
+
+    <!-- Email -->
+    <EditText
+        android:id="@+id/emailInput"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_input"
+        android:hint="Email"
+        android:textSize="17sp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="15dp" />
+
+    <!-- Password -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="15dp"
+        app:endIconMode="password_toggle"
+        app:boxBackgroundMode="none">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordInput"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_input"
+            android:hint="Password"
+            android:textSize="17sp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Confirm Password -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="30dp"
+        app:endIconMode="password_toggle"
+        app:boxBackgroundMode="none">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/confirmPasswordInput"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_input"
+            android:hint="Confirm password"
+            android:textSize="17sp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Sign up button -->
+    <Button
+        android:id="@+id/signupButton"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="Sign up"
+        android:textColor="#FFFFFF"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:background="@drawable/bg_button"
+        android:elevation="0dp" />
+
+    <!-- Login -->
+    <TextView
+        android:id="@+id/loginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already have an account? Login"
+        android:textColor="#315A91"
+        android:textSize="16sp"
+        android:layout_marginTop="25dp"
+        android:clickable="true"
+        android:focusable="true" />
+
+</LinearLayout>

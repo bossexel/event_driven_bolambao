@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FAF8FC"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Registered Users"
+        android:textColor="#171717"
+        android:textStyle="bold"
+        android:textSize="28sp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Accounts from Render API"
+        android:textColor="#667085"
+        android:textSize="15sp"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loading users..."
+        android:textColor="#315A91"
+        android:textSize="15sp"
+        android:layout_marginBottom="20dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/usersContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/refreshButton"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="Refresh Users"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:backgroundTint="#315A91"
+        android:layout_marginTop="12dp"/>
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="Back"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:backgroundTint="#E4EAF4"
+        android:textColor="#315A91"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>

@@ -1,0 +1,96 @@
+
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.example.clydhnseventdriven'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.example.clydhnseventdriven"
+
+        minSdk 24
+        targetSdk 35
+
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'
+            ), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+dependencies {
+
+    // =====================================
+    // ANDROID APPLICATION DEPENDENCIES
+    // =====================================
+
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+
+    implementation 'com.google.android.material:material:1.12.0'
+
+    implementation 'androidx.activity:activity:1.9.3'
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
+
+
+    // =====================================
+    // RENDER API CONNECTION - VOLLEY
+    // =====================================
+
+    implementation 'com.android.volley:volley:1.2.1'
+
+
+    // =====================================
+    // UNIT TESTING
+    // =====================================
+
+    testImplementation 'junit:junit:4.13.2'
+
+
+    // =====================================
+    // ANDROID INSTRUMENTATION TESTING
+    // =====================================
+
+    androidTestImplementation 'androidx.test.ext:junit:1.3.0'
+
+    androidTestImplementation 'androidx.test:runner:1.7.0'
+
+    androidTestImplementation 'androidx.test:core:1.7.0'
+
+
+    // =====================================
+    // ESPRESSO LOGIN AUTOMATION
+    // =====================================
+
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
+
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.7.0'
+
+
+    // =====================================
+    // MOCK SERVER FOR AUTOMATED LOGIN TESTS
+    // =====================================
+
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#FAF8FC">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✓"
+            android:textColor="#26935C"
+            android:textSize="75sp"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login Successful!"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#171717"
+            android:gravity="center"
+            android:layout_marginBottom="18dp"/>
+
+        <TextView
+            android:id="@+id/welcomeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Successfully verified!"
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:gravity="center"
+            android:layout_marginBottom="40dp"/>
+
+        <Button
+            android:id="@+id/viewUsersButton"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="View Registered Users"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:backgroundTint="#315A91"
+            android:layout_marginBottom="15dp"/>
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="Logout"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textColor="#315A91"
+            android:backgroundTint="#E4EAF4"/>
+
+    </LinearLayout>
+</ScrollView>
